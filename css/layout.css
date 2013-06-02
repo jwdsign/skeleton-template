@@ -1,0 +1,239 @@
+/*
+* Skeleton V1.2
+* Copyright 2011, Dave Gamache
+* www.getskeleton.com
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+* 6/20/2012
+*/
+
+/* Table of Content
+==================================================
+	#Wefonts
+	#Site Styles
+	#Page Styles
+	#Media Queries
+	#Font-Face */
+
+/* #WebFonts
+================================================== */
+
+
+
+/* #Site Styles
+================================================== */
+
+#wpstats{height: 0px; width: 0px; overflow: hidden;}
+
+* {
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+
+img,
+embed,
+object,
+video,
+iframe {
+  max-width: 100%;
+}
+
+video{
+	width: 100% !important;
+	height:auto !important;
+
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{}
+
+
+html{
+	width: 100%; height: 100%;
+	}
+
+body{	
+	font-family:;
+	font-size:16px; /* 1em*/
+	line-height:24px; /* 1.5em*/
+	font-smooth:always;
+	-webkit-font-smoothing: antialiased;}
+
+/* Dynamic Mobile Menu */
+
+.nav-toggled{
+	-webkit-transition: all 100ms ease-in-out;
+	-moz-transition: all 100ms ease-in-out;
+	-ms-transition: all 100ms ease-in-out;
+	-o-transition: all 100ms ease-in-out;
+	transition: all 100ms ease-in-out;
+}
+
+#wrapper{
+		width: 100%;
+		height:100%;
+		overflow-x: hidden; overflow-y: auto;
+		-webkit-transition: all 200ms ease-in-out;
+		-moz-transition: all 200ms ease-in-out;
+		-ms-transition: all 200ms ease-in-out;
+		-o-transition: all 200ms ease-in-out;
+		transition: all 200ms ease-in-out; 
+}
+
+/*
+#wrapper.nav-toggled{
+	margin-left: 20%;
+	width: 100%;
+}
+
+
+#wrapper.nav-toggled > *{
+	opacity: 0.25;
+	-webkit-transition: all 200ms ease-in-out;
+	-moz-transition: all 200ms ease-in-out;
+	-ms-transition: all 200ms ease-in-out;
+	-o-transition: all 200ms ease-in-out;
+	transition: all 200ms ease-in-out; 
+}
+*/
+
+#mobile-menu{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: -20%;
+	width: 20%;
+	height: 100%;
+	background: #fff;
+	z-index: 9999;
+	border-right: 1px solid #ddd;
+}
+
+#mobile-menu.nav-toggled{
+		left:0;
+}
+
+#nav-button{
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+	margin-left: -1px;
+	width: 46px;
+	height: 46px;
+	background: #fff;
+	border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	font-family: "jwd-icons";
+	color: #777;
+	text-align: center;
+	line-height: 46px;
+	z-index: 9999;
+	cursor: pointer;
+	-webkit-transition: all 200ms ease-in-out;
+	-moz-transition: all 200ms ease-in-out;
+	-ms-transition: all 200ms ease-in-out;
+	-o-transition: all 200ms ease-in-out;
+	transition: all 200ms ease-in-out; 
+	}
+
+#nav-button.nav-toggled{
+		left: 20%;
+		opacity: 1.0;
+}
+
+/* #Page Styles
+================================================== */
+
+
+
+
+/* #Media Queries
+================================================== */
+	
+	/*Widescreen displays*/
+		@media only screen and (min-width: 1920px) {
+		body{	
+			font-size:18px; /* 1em*/
+			line-height:1.5;
+			}
+		}
+
+
+	/* Smaller than standard 960 (devices and browsers) */
+	@media only screen and (max-width: 959px) {
+
+			body{	
+			font-size:16px; /* 1em*/
+			line-height:1.5;
+			}
+	}
+
+	/* Tablet Portrait size to standard 960 (devices and browsers) */
+	@media only screen and (min-width: 768px) and (max-width: 959px) {
+			body{	
+			font-size:14px; /* 1em*/
+			line-height:1.6;
+			}
+	}
+
+	/* All Mobile Sizes (devices and browser) */
+	@media only screen and (max-width: 767px) {
+
+			body{	
+			font-size:13px; /* 1em*/
+			line-height:1.75;
+			}
+
+			#nav-button{display: inline-block; font-size: 16px;}
+			#mobile-menu{display: block;}
+			#main_menu{display: none;}
+
+			#wrapper.nav-toggled{
+			margin-left: 80%;
+			width: 100%;
+			}
+
+			#wrapper.nav-toggled > *{
+			opacity: 0.25;
+			-webkit-transition: all 200ms ease-in-out;
+			-moz-transition: all 200ms ease-in-out;
+			-ms-transition: all 200ms ease-in-out;
+			-o-transition: all 200ms ease-in-out;
+			transition: all 200ms ease-in-out; 
+			}
+
+			#nav-button.nav-toggled{
+			left: 80%;
+			opacity: 1.0;
+			}
+
+			#mobile-menu{
+			top: 0;
+			left: -80%;
+			width: 80%;
+			margin-right: -1px;
+			}
+
+
+	}
+
+	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+	@media only screen and (min-width: 480px) and (max-width: 767px) {
+
+			body{	
+			font-size:13px; /* 1em*/
+			line-height:1.75;
+			}
+			
+
+	}
+
+	/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+	@media only screen and (max-width: 479px) {
+
+	}
