@@ -21,14 +21,6 @@ function really_block_users() {
     }
 }
 
-// add feed links to header
-if (function_exists('automatic_feed_links')) {
-	automatic_feed_links();
-} else {
-	return;
-}
-
-
 // smart jquery inclusion
 if (!is_admin()) {
 	wp_deregister_script('jquery');
@@ -218,26 +210,6 @@ if ( function_exists( 'register_nav_menus' ) ) {
 		)
 	);
 }
-
-// Add Theme-Support for Post-Thumbnails
-add_theme_support( 'post-thumbnails' );
-// regular size
-add_image_size( 'regular', 480, '');
-// medium size
-add_image_size( 'medium', 768, '');
-// large thumbnails
-add_image_size( 'large', 960, '' );
-
-// show custom image sizes on when inserting media
-function cake_show_image_sizes($sizes) {
-    $sizes['regular'] = __( 'Our Regular Size', 'cake' );
-    $sizes['medium'] = __( 'Our Medium Size', 'cake' );
-    $sizes['large'] = __( 'Our Large Size', 'cake' );
-    return $sizes;
-}
-add_filter('image_size_names_choose', 'cake_show_image_sizes');
-
-
     if (function_exists('register_sidebar')) {
     	register_sidebar(array(
     		'name' => 'Sidebar Widgets',
@@ -251,12 +223,90 @@ add_filter('image_size_names_choose', 'cake_show_image_sizes');
     }
 
 
-add_theme_support( 'post-formats', array( 'aside', 'image', 'link', 'quote', 'status' ) );
 
-add_action('after_setup_theme', 'my_theme_setup');
-function my_theme_setup(){
-    load_theme_textdomain('my_theme', get_template_directory() . '/languages');
+// Set content width value based on the theme's design
+if ( ! isset( $content_width ) )
+	$content_width = 960;
+
+if ( ! function_exists('skeleton_template_features') ) {
+
+// Register Theme Features
+function skeleton_template_features()  {
+	global $wp_version;
+
+	// add text domain for easy translations
+	load_theme_textdomain('skeleton_template', get_template_directory() . '/languages');
+
+	// Add theme support for Automatic Feed Links
+	if ( version_compare( $wp_version, '3.0', '>=' ) ) :
+		add_theme_support( 'automatic-feed-links' );
+	else :
+		automatic_feed_links();
+	endif;
+
+	// Add theme support for Post Formats
+	$formats = array( 'status', 'quote', 'gallery', 'image', 'video', 'audio', 'link', 'aside', 'chat', );
+	add_theme_support( 'post-formats', $formats );	
+
+	// Add theme support for Featured Images
+	add_theme_support( 'post-thumbnails' );	
+
+	 // Set custom thumbnail dimensions
+	set_post_thumbnail_size( 960, 480, true );
+	// regular size
+	add_image_size( 'regular', 480, '');
+	// medium size
+	add_image_size( 'medium', 768, '');
+	// large thumbnails
+	add_image_size( 'large', 960, '' );
+
+// show custom image sizes on when inserting media
+function cake_show_image_sizes($sizes) {
+    $sizes['regular'] = __( 'Our Regular Size', 'cake' );
+    $sizes['medium'] = __( 'Our Medium Size', 'cake' );
+    $sizes['large'] = __( 'Our Large Size', 'cake' );
+    return $sizes;
+}
+add_filter('image_size_names_choose', 'cake_show_image_sizes');
+
+
+	// Add theme support for Custom Background
+	$background_args = array(
+		'default-color'          => '#fff',
+		'default-image'          => '',
+		'wp-head-callback'       => '_custom_background_cb',
+		'admin-head-callback'    => '',
+		'admin-preview-callback' => '',
+	);
+	if ( version_compare( $wp_version, '3.4', '>=' ) ) :
+		add_theme_support( 'custom-background', $background_args );
+	else :
+		add_custom_background();
+	endif;
+
+	// Add theme support for Custom Header
+	$header_args = array(
+		'default-image'          => '',
+		'width'                  => 1920,
+		'height'                 => 256,
+		'flex-width'             => true,
+		'flex-height'            => true,
+		'random-default'         => false,
+		'header-text'            => false,
+		'default-text-color'     => '#fff',
+		'uploads'                => true,
+
+	);
+	if ( version_compare( $wp_version, '3.4', '>=' ) ) :
+		add_theme_support( 'custom-header', $header_args );
+	else :
+		add_custom_image_header();
+	endif;
 }
 
+// Hook into the 'after_setup_theme' action
+add_action( 'after_setup_theme', 'skeleton_template_features' );
+
+}
 
 ?>

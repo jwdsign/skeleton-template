@@ -35,11 +35,15 @@
   	</script>
 </head>
 
-<body>
+<body <?php body_class($class); ?> >
  
  <?php get_template_part('mobile-menu'); ?> 
 
 <div id="wrapper">
 <span id="nav-button" title="Navigation">&#xe017;</span>
-<header role="banner"></header>
+
+<header role="banner">
+<img class="custom_header" src="<?php header_image(); ?>" height="<?php echo get_custom_header()->height; ?>" width="<?php echo get_custom_header()->width; ?>" alt="" title="" />
+</header>
+
 <?php get_template_part('main-menu'); ?> 

@@ -17,8 +17,6 @@
 		<div class="prev-posts"><?php previous_posts_link(); ?></div>
 	</div>
 
-	<?php comments_template( '', true ); ?>
-
 <?php else : ?>
 
 	<div <?php post_class(); ?> id="post-<?php the_ID(); ?>">
@@ -27,6 +25,12 @@
 
 <?php endif; ?>
 </div>
+
+<section class="comments">
+
+<div class="container"><?php comments_template( '', true ); ?></div>
+
+</section>
 
 </div>
 

@@ -39,6 +39,15 @@ iframe {
   max-width: 100%;
 }
 
+.size-auto, 
+.size-full,
+.size-large,
+.size-medium,
+.size-thumbnail {
+	max-width: 100%;
+	height: auto;
+}
+
 video{
 	width: 100% !important;
 	height:auto !important;
@@ -145,6 +154,19 @@ body{
 		left: 20%;
 		opacity: 1.0;
 }
+
+.custom_header{
+	max-width: 100%;
+	max-height: 256px;
+	width: auto;
+}
+
+
+/* comments section */
+section.comments{
+	background: rgba(0,0,0,0.1);
+}
+
 
 /* #Page Styles
 ================================================== */
