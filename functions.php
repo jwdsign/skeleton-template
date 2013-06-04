@@ -222,6 +222,15 @@ if ( function_exists( 'register_nav_menus' ) ) {
     	));
     }
 
+// add google analytics to footer
+function add_google_analytics() {
+	echo '<script async src="http://www.google-analytics.com/ga.js" type="text/javascript"></script>';
+	echo '<script defer type="text/javascript">';
+	echo 'var pageTracker = _gat._getTracker("UA-XXXXXXXX-XX");';
+	echo 'pageTracker._trackPageview();';
+	echo '</script>';
+}
+add_action('wp_footer', 'add_google_analytics');
 
 
 // Set content width value based on the theme's design
@@ -269,6 +278,23 @@ function cake_show_image_sizes($sizes) {
 }
 add_filter('image_size_names_choose', 'cake_show_image_sizes');
 
+//remove inline width and height added to images
+	add_filter( 'post_thumbnail_html', 'remove_thumbnail_dimensions', 10 );
+	add_filter( 'image_send_to_editor', 'remove_thumbnail_dimensions', 10 );
+	// Removes attached image sizes as well
+	add_filter( 'the_content', 'remove_thumbnail_dimensions', 10 );
+	function remove_thumbnail_dimensions( $html ) {
+    		$html = preg_replace( '/(width|height)=\"\d*\"\s/', "", $html );
+    		return $html;
+	}
+
+	function custom_upload_mimes ( $existing_mimes=array() ) {
+	// add the file extension to the array
+	$existing_mimes['svg'] = 'mime/type';
+    // call the modified list of extensions
+	return $existing_mimes;
+}
+add_filter('upload_mimes', 'custom_upload_mimes');
 
 	// Add theme support for Custom Background
 	$background_args = array(
