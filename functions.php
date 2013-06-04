@@ -64,18 +64,6 @@ remove_action('wp_head', 'start_post_rel_link', 10, 0);
 remove_action('wp_head', 'parent_post_rel_link', 10, 0);
 remove_action('wp_head', 'adjacent_posts_rel_link', 10, 0);
 
-
-// add google analytics to footer
-function add_google_analytics() {
-	echo '<script src="http://www.google-analytics.com/ga.js" type="text/javascript"></script>';
-	echo '<script type="text/javascript">';
-	echo 'var pageTracker = _gat._getTracker("UA-XXXXX-X");';
-	echo 'pageTracker._trackPageview();';
-	echo '</script>';
-}
-add_action('wp_footer', 'add_google_analytics');
-
-
 // custom excerpt length
 function custom_excerpt_length($length) {
 	return 20;
@@ -139,10 +127,6 @@ function disable_all_widgets($sidebars_widgets) {
 	return $sidebars_widgets;
 }
 add_filter('sidebars_widgets', 'disable_all_widgets');
-
-	//remove inline-styling from images
-	add_filter( 'post_thumbnail_html', 'remove_thumbnail_dimensions', 10 ); add_filter( 'image_send_to_editor', 'remove_thumbnail_dimensions', 10 ); function remove_thumbnail_dimensions( $html ) { $html = preg_replace( '/(width|height)=\"\d*\"\s/', "", $html ); return $html; }
-
 
 // kill the admin nag
 if (!current_user_can('edit_users')) {
@@ -334,5 +318,30 @@ add_filter('upload_mimes', 'custom_upload_mimes');
 add_action( 'after_setup_theme', 'skeleton_template_features' );
 
 }
+
+// shortcode for showing code
+function short_code( $atts , $content = null ) {
+return '<pre class="code">' . do_shortcode( $content ) . '</pre>';
+}
+add_shortcode( 'code', 'short_code' );
+
+// shortcode for two columns
+function two_columns( $atts , $content = null ) {
+return '<div class="eight columns">' . do_shortcode( $content ) . '</div>';
+}
+add_shortcode( 'two-columns', 'two_columns' );
+
+// shortcode for three columns
+function three_columns( $atts , $content = null ) {
+return '<div class="one-third column">' . do_shortcode( $content ) . '</div>';
+}
+add_shortcode( 'three-columns', 'three_columns' );
+
+// shortcode for four columns
+function four_columns( $atts , $content = null ) {
+return '<div class="four columns">' . do_shortcode( $content ) . '</div>';
+}
+add_shortcode( 'four-columns', 'four_columns' );
+
 
 ?>

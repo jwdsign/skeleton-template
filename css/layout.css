@@ -60,6 +60,9 @@ h4,
 h5,
 h6{}
 
+pre, code{
+	font-family:"Courier", "Courier New", mono-space;
+}
 
 html{
 	width: 100%; height: 100%;

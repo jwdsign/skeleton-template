@@ -1,0 +1,1 @@
+<section class="comments"><div class="container"><?php comments_template( '', true ); ?></div></section>

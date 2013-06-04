@@ -47,3 +47,5 @@
 </header>
 
 <?php get_template_part('main-menu'); ?> 
+
+<div id="main" role="main">
