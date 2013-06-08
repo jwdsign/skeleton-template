@@ -1,8 +1,6 @@
 <?php get_header(); ?>
 
-<div id="main" role="main">
-
-<div class="container">
+<div id="index" class="container">
 
 <?php get_template_part( 'loop', 'index' ); ?>
 

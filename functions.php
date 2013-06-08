@@ -314,6 +314,15 @@ add_filter('upload_mimes', 'custom_upload_mimes');
 	endif;
 }
 
+add_theme_support( 'infinite-scroll', array(
+    'type'           => 'scroll',
+    'footer_widgets' => false,
+    'container'      => 'index',
+    'wrapper'        => true,
+    'render'         => false,
+    'posts_per_page' => false
+) );
+
 // Hook into the 'after_setup_theme' action
 add_action( 'after_setup_theme', 'skeleton_template_features' );
 
@@ -342,6 +351,140 @@ function four_columns( $atts , $content = null ) {
 return '<div class="four columns">' . do_shortcode( $content ) . '</div>';
 }
 add_shortcode( 'four-columns', 'four_columns' );
+
+
+add_action('init', 'project_custom_init');    
+      
+    /*-- Custom Post Init Begin --*/  
+    function project_custom_init()  
+    {  
+      $labels = array(  
+        'name' => _x('Projects', 'post type general name'),  
+        'singular_name' => _x('Project', 'post type singular name'),  
+        'add_new' => _x('Add New', 'project'),  
+        'add_new_item' => __('Add New Project'),  
+        'edit_item' => __('Edit Project'),  
+        'new_item' => __('New Project'),  
+        'view_item' => __('View Project'),  
+        'search_items' => __('Search Projects'),  
+        'not_found' =>  __('No projects found'),  
+        'not_found_in_trash' => __('No projects found in Trash'),  
+        'parent_item_colon' => '',  
+        'menu_name' => 'Project'  
+      
+      );  
+        
+     $args = array(  
+        'labels' => $labels,  
+        'public' => true,  
+        'publicly_queryable' => true,  
+        'show_ui' => true,  
+        'show_in_menu' => true,  
+        'query_var' => true,  
+        'rewrite' => true,  
+        'capability_type' => 'post',  
+        'has_archive' => true,  
+        'hierarchical' => false,  
+        'menu_position' => null,  
+        'supports' => array('title','editor','author','thumbnail','excerpt','comments')  
+      );  
+      // The following is the main step where we register the post.  
+      register_post_type('project',$args);  
+        
+      // Initialize New Taxonomy Labels  
+      $labels = array(  
+        'name' => _x( 'Tags', 'taxonomy general name' ),  
+        'singular_name' => _x( 'Tag', 'taxonomy singular name' ),  
+        'search_items' =>  __( 'Search Types' ),  
+        'all_items' => __( 'All Tags' ),  
+        'parent_item' => __( 'Parent Tag' ),  
+        'parent_item_colon' => __( 'Parent Tag:' ),  
+        'edit_item' => __( 'Edit Tags' ),  
+        'update_item' => __( 'Update Tag' ),  
+        'add_new_item' => __( 'Add New Tag' ),  
+        'new_item_name' => __( 'New Tag Name' ),  
+      );  
+        // Custom taxonomy for Project Tags  
+        register_taxonomy('tagportfolio',array('project'), array(  
+        'hierarchical' => true,  
+        'labels' => $labels,  
+        'show_ui' => true,  
+        'query_var' => true,  
+        'rewrite' => array( 'slug' => 'tag-portfolio' ),  
+      ));  
+        
+    }  
+    /*-- Custom Post Init Ends --*/  
+
+
+    /*--- Demo URL meta box ---*/
+	
+	add_action('admin_init','portfolio_meta_init');
+	
+	function portfolio_meta_init()
+	{
+		// add a meta box for wordpress 'project' type
+		add_meta_box('portfolio_meta', 'Project Infos', 'portfolio_meta_setup', 'project', 'side', 'low');
+	 
+		// add a callback function to save any data a user enters in
+		add_action('save_post','portfolio_meta_save');
+	}
+	
+	function portfolio_meta_setup()
+	{
+		global $post;
+	 	 
+		?>
+			<div class="portfolio_meta_control">
+				<label>URL</label>
+				<p>
+					<input type="text" name="_url" value="<?php echo get_post_meta($post->ID,'_url',TRUE); ?>" style="width: 100%;" />
+				</p>
+			</div>
+		<?php
+
+		// create for validation
+		echo '<input type="hidden" name="meta_noncename" value="' . wp_create_nonce(__FILE__) . '" />';
+	}
+	
+	function portfolio_meta_save($post_id) 
+	{
+		// check nonce
+		if (!isset($_POST['meta_noncename']) || !wp_verify_nonce($_POST['meta_noncename'], __FILE__)) {
+		return $post_id;
+		}
+
+		// check capabilities
+		if ('post' == $_POST['post_type']) {
+		if (!current_user_can('edit_post', $post_id)) {
+		return $post_id;
+		}
+		} elseif (!current_user_can('edit_page', $post_id)) {
+		return $post_id;
+		}
+
+		// exit on autosave
+		if (defined('DOING_AUTOSAVE') == DOING_AUTOSAVE) {
+		return $post_id;
+		}
+
+		if(isset($_POST['_url'])) 
+		{
+			update_post_meta($post_id, '_url', $_POST['_url']);
+		} else 
+		{
+			delete_post_meta($post_id, '_url');
+		}
+	}
+	
+	/*--- #end  Demo URL meta box ---*/
+	
+	function enqueue_filterable() 
+	{
+		wp_register_script( 'filterable', get_template_directory_uri() . '/js/filterable.js', array( 'jquery' ) );
+		wp_enqueue_script( 'filterable' );
+	}
+	add_action('wp_enqueue_scripts', 'enqueue_filterable');
 
 
 ?>
